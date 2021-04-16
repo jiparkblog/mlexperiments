@@ -1,0 +1,138 @@
+
+@font-face {
+  font-family: 'post-light';
+  src: url('postnobillscolombo-light.ttf')  format('truetype');
+}
+@font-face {
+  font-family: 'post-regular';
+  src: url('postnobillscolombo-regular.ttf')  format('truetype');
+}
+@font-face {
+  font-family: 'ibm-light';
+  src: url('IBMPlexSerif-ExtraLight.ttf')  format('truetype');
+}
+@font-face {
+  font-family: 'ibm-italic';
+  src: url('IBMPlexSerif-ExtraLightItalic.ttf')  format('truetype');
+}
+
+html {
+  padding:0;
+  margin:0;
+}
+body{
+}
+
+.header{
+  margin: 0px 40px;
+  border-bottom:1px solid black;
+  padding-top: 20px;
+  padding-bottom:20px;
+  font-family: 'post-light';
+  text-align: center;
+  font-size:70px;
+}
+.header p{
+  margin: 0;
+}
+.header a{
+  color:black;
+  text-decoration: none;
+}
+h1{
+  margin: 0;
+  cursor: pointer;
+  font-weight: normal;
+  font-size:70px;
+  font-family: 'post-light';
+}
+
+.numbers{
+  margin-top:20px;
+  text-align: center;
+
+}
+h1 a{
+  color:black;
+  text-decoration: none;
+}
+h1 a:hover{
+  color:#45ff57;
+}
+
+.main{
+  padding:0px 40px;
+  width: 100%;
+}
+
+h2{
+  margin: 0;
+  font-weight: normal;
+  font-size:100px;
+  font-family: 'ibm-italic';
+}
+
+#webcam-container{
+  float:right;
+}
+
+.result{
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  margin-top:20px;
+}
+
+
+#webcam-container{
+  float:left;
+}
+
+#mytxt{
+  color:red;
+  width: 60%;
+  float:left;
+  font-family: 'ibm-italic';
+  font-size: 80px;
+  padding-left: 40px;
+  font-size: 4em; 
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  transition: all 1s ease;
+}
+.main img{
+  width: 80px;
+}
+
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}
+
+
+
+.wcontent{
+  width: 100%;
+  padding:0px 40px;
+  font-weight: normal;
+  font-size:16px;
+  font-family: 'ibm-light';
+}
+.wcontent a{
+  font-size:16px;
+  color:blue;
+  font-family: 'ibm-light';
+}
