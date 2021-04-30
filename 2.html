@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+  <script src="p5.min.js"></script>
+  <script src="p5.dom.min.js"></script>
+  <script src="libraries/p5.speech.js"></script>
   <style>
       /* position:absolute;
   left:0;
@@ -16,9 +19,6 @@
 </head>
 
 <body>
-
-
-
 
   <div class="header">
     <p><a href="index.html">Machine Learning Experiments</a></p>
@@ -32,8 +32,8 @@
   </div>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script> -->
 <script type="text/javascript">
 
 //start tensorflow
@@ -98,85 +98,35 @@ const button = document.querySelector("#boop");
 
 
 
+let speech;
 
-  // more documentation available at
-    // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
+function setup() {
+  noCanvas();
+  // Create a Speech Recognition object with callback
+  speechRec = new p5.SpeechRec('en-US', gotSpeech);
+  // "Continuous recognition" (as opposed to one time only)
+  let continuous = true;
+  // If you want to try partial recognition (faster, less accurate)
+  let interimResults = false;
+  // This must come after setting the properties
+  speechRec.start(continuous, interimResults);
 
-    // the link to your model provided by Teachable Machine export panel
-    const URL = "https://teachablemachine.withgoogle.com/models/WerH2egqk/";
+  // Speech recognized event
+  function gotSpeech() {
+    // Something is there
+    // Get it as a string, you can also get JSON with more info
 
-    init();
-
-    async function createModel() {
-        const checkpointURL = URL + "model.json"; // model topology
-        const metadataURL = URL + "metadata.json"; // model metadata
-
-        const recognizer = speechCommands.create(
-            "BROWSER_FFT", // fourier transform type, not useful to change
-            undefined, // speech commands vocabulary feature, not useful for your models
-            checkpointURL,
-            metadataURL);
-
-        // check that model and metadata are loaded via HTTPS requests.
-        await recognizer.ensureModelLoaded();
-
-        return recognizer;
+    if (speechRec.resultValue) {
+      let said = speechRec.resultString;
+      // set color
+      said=said.toString()
+      ballcol=said;
+      handleClick();
+      console.log(ballcol)
     }
+  }
+}
 
-    async function init() {
-        const recognizer = await createModel();
-        const classLabels = recognizer.wordLabels(); // get class labels
-        const labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < classLabels.length; i++) {
-            labelContainer.appendChild(document.createElement("div"));
-        }
-
-        // listen() takes two arguments:
-        // 1. A callback function that is invoked anytime a word is recognized.
-        // 2. A configuration object with adjustable fields
-        recognizer.listen(result => {
-            const scores = result.scores; // probability of prediction for each class
-            // render the probability scores per class
-            for (let i = 0; i < classLabels.length; i++) {
-              let prob=result.scores[i];
-              if(prob>0.7){
-                if(classLabels[i]=='Red'){
-                  ballcol="red"
-                  handleClick();
-                }else if(classLabels[i]=='Orange'){
-                  ballcol="orange"
-                  handleClick();
-                }else if(classLabels[i]=='Yellow'){
-                  ballcol="yellow"
-                  handleClick();
-                }else if(classLabels[i]=='Green'){
-                  ballcol="green"
-                  handleClick();
-                }else if(classLabels[i]=='Blue'){
-                  ballcol="blue"
-                  handleClick();
-                }else if(classLabels[i]=='Purple'){
-                  ballcol="purple"
-                  handleClick();
-                }else if(classLabels[i]=='Pink'){
-                  ballcol="pink"
-                  handleClick();
-                }else if(classLabels[i]=='Black'){
-                  ballcol="black"
-                  handleClick();
-                }
-              }
-            }
-        }, {
-            includeSpectrogram: true, // in case listen should return result.spectrogram
-            probabilityThreshold: 0.75,
-            invokeCallbackOnNoiseAndUnknown: true,
-            overlapFactor: 0.50 // probably want between 0.5 and 0.75. More info in README
-        });
-
-        // Stop the recognition in 5 seconds.
-        // setTimeout(() => recognizer.stopListening(), 5000);
-    }
 </script>
 
   <script src="js/plugins.js"></script>
